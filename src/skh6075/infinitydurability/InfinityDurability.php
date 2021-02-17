@@ -18,6 +18,8 @@ class InfinityDurability extends PluginBase implements Listener{
     }
 
     private function onUpdatePlayerArmorInventory(Player $player): void{
+        if (!$player->isOnline ())
+            return;
         foreach ($player->getArmorInventory()->getContents(true) as $slot => $item) {
             /** @var Durable $item */
             if (!$item instanceof Durable)
