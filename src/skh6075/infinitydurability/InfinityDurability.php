@@ -32,11 +32,7 @@ class InfinityDurability extends PluginBase implements Listener{
 
     /** @priority HIGHEST */
     public function onPlayerJoin(PlayerJoinEvent $event): void{
-        $player = $event->getPlayer();
-
-        $this->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($player): void{
-            $this->onUpdatePlayerArmorInventory($player);
-        }), 10);
+        $this->onUpdatePlayerArmorInventory($event->getPlayer());
     }
 
     /** @priority HIGHEST */
@@ -45,8 +41,6 @@ class InfinityDurability extends PluginBase implements Listener{
         if (!($player = $event->getEntity()) instanceof Player)
             return;
 
-        $this->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use ($player): void{
-            $this->onUpdatePlayerArmorInventory($player);
-        }), 10);
+        $this->onUpdatePlayerArmorInventory($player);
     }
 }
