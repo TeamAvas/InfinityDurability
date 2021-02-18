@@ -10,6 +10,7 @@ use pocketmine\item\Durable;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
+use pocketmine\inventory\ArmorInventory;
 
 class InfinityDurability extends PluginBase implements Listener{
 
@@ -20,6 +21,9 @@ class InfinityDurability extends PluginBase implements Listener{
     private function onUpdatePlayerArmorInventory(Player $player): void{
         if (!$player->isOnline ())
             return;
+        if (!$player->getArmorInventory() instanceof ArmorInventory)
+            return;
+
         foreach ($player->getArmorInventory()->getContents(true) as $slot => $item) {
             /** @var Durable $item */
             if (!$item instanceof Durable)
