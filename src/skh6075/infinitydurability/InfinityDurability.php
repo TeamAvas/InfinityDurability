@@ -18,9 +18,11 @@ class InfinityDurability extends PluginBase implements Listener{
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
+    /** @param Player $player */
     private function onUpdatePlayerArmorInventory(Player $player): void{
         if (!$player->isOnline ())
             return;
+
         if (!$player->getArmorInventory() instanceof ArmorInventory)
             return;
 
@@ -28,6 +30,7 @@ class InfinityDurability extends PluginBase implements Listener{
             /** @var Durable $item */
             if (!$item instanceof Durable)
                 continue;
+
             $item->setDamage(0);
             $item->setUnbreakable(true);
             $player->getArmorInventory()->setItem($slot, $item);
@@ -37,14 +40,5 @@ class InfinityDurability extends PluginBase implements Listener{
     /** @priority HIGHEST */
     public function onPlayerJoin(PlayerJoinEvent $event): void{
         $this->onUpdatePlayerArmorInventory($event->getPlayer());
-    }
-
-    /** @priority HIGHEST */
-    public function onEntityChangeArmor(EntityArmorChangeEvent $event): void{
-        /** @var Player $player */
-        if (!($player = $event->getEntity()) instanceof Player)
-            return;
-
-        $this->onUpdatePlayerArmorInventory($player);
     }
 }
