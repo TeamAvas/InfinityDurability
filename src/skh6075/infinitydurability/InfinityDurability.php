@@ -23,17 +23,14 @@ class InfinityDurability extends PluginBase implements Listener{
         if (!$player->isOnline ())
             return;
 
-        if (!$player->getArmorInventory() instanceof ArmorInventory)
-            return;
-
         foreach ($player->getArmorInventory()->getContents(true) as $slot => $item) {
             /** @var Durable $item */
             if (!$item instanceof Durable)
                 continue;
 
-            if ($item->getDamage() > 0)
-                $item->setDamage(0);
+            $item->setDamage(0);
             $item->setUnbreakable(true);
+
             $player->getArmorInventory()->setItem($slot, $item);
         }
     }
